@@ -9,7 +9,7 @@ from sprint_the_game.victory import Victory
 
 class App:
     def __init__(self):
-        pyxel.init(255, 255, title="Sprint The Game", display_scale=5)
+        pyxel.init(256, 144, title="Sprint The Game", display_scale=5)
 
         self.state = GameState.MAIN_MENU
 
@@ -34,9 +34,6 @@ class App:
         pyxel.cls(0)
 
         self.game[self.state].draw()
-
-        # pyxel.rect(55, 41, 100, 100, pyxel.frame_count % 16)
-        pyxel.blt(0, 0, 0, 0, 0, 255, 255)
 
 
 def main() -> None:
