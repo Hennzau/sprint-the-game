@@ -13,4 +13,6 @@ class Playing:
         return GameState.PLAYING
 
     def draw(self):
-        pyxel.text(pyxel.width // 2 - 48, pyxel.height // 2, "You're now playing", 1, None)
+        pyxel.text(
+            pyxel.width // 2 - 48, pyxel.height // 2, "You're now playing", 1, None
+        )

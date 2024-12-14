@@ -28,6 +28,10 @@ class App:
     def update(self):
         next_state = self.game[self.state].update()
 
+        if next_state == GameState.LEAVING:
+            pyxel.quit()
+            return
+
         self.state = next_state
 
     def draw(self):

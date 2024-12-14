@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "numpy>=2.2.0",
     "pyxel>=2.2.8",
 ]
 
