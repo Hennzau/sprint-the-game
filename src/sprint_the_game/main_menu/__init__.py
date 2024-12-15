@@ -1,5 +1,5 @@
 import pyxel
-from gui import StaticGUI
+from sprint_the_game.gui import StaticGUI
 from sprint_the_game.event import GameEvent
 from sprint_the_game.state import GameState
 
