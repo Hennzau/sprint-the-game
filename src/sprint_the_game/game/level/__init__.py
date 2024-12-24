@@ -23,7 +23,7 @@ class Level:
         self.selected_level = None
 
         self.gui.add(
-            3, "Back", lambda: self.events.append(GameEvent.LEVEL_TO_MAIN_MENU)
+            3, "Back", lambda: self.events.append(GameEvent.LEVEL_TO_LEVEL_SELECTOR)
         )
 
     def level_event(self, level: int):
@@ -42,8 +42,8 @@ class Level:
         while len(self.events) > 0:
             event = self.events.pop()
 
-            if event == GameEvent.LEVEL_TO_MAIN_MENU:
-                return (GameState.MAIN_MENU, None)
+            if event == GameEvent.LEVEL_TO_LEVEL_SELECTOR:
+                return (GameState.LEVEL_SELECTOR, None)
 
         return (GameState.LEVEL, None)
 

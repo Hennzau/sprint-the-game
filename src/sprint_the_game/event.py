@@ -15,3 +15,4 @@ class GameEvent(Enum):
     LEVEL_SELECTOR_TO_LEVEL = 7
 
     LEVEL_TO_MAIN_MENU = 8
+    LEVEL_TO_LEVEL_SELECTOR = 9
