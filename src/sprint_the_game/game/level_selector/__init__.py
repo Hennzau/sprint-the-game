@@ -5,7 +5,7 @@ from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
 from sprint_the_game.game.level import LevelConf
-from sprint_the_game.gui.static import StaticGUI
+from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
 
 
@@ -15,7 +15,7 @@ class LevelSelectorConf(Conf):
 
 class LevelSelector:
     def __init__(self, conf: LevelSelectorConf):
-        self.gui = StaticGUI()
+        self.gui = StaticButtons()
 
         self.events: list[Tuple[GameEvent, Union[int, None]]] = []
 

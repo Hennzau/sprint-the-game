@@ -4,7 +4,7 @@ from typing import Callable
 import pyxel
 
 
-class StaticGUI:
+class StaticButtons:
     def __init__(self):
         self.buttons: list[list[Tuple[str, Callable]]] = [[], [], [], [], []]
         self.button = None

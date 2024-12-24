@@ -4,7 +4,7 @@ from typing import Tuple
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
-from sprint_the_game.gui.static import StaticGUI
+from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
 
 
@@ -14,12 +14,24 @@ class OptionsConf(Conf):
 
 class Options:
     def __init__(self, conf: OptionsConf):
-        self.gui = StaticGUI()
+        self.gui = StaticButtons()
 
         self.events: list[GameEvent] = []
 
         self.gui.add(
             0, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+        )
+        self.gui.add(
+            1, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+        )
+        self.gui.add(
+            2, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+        )
+        self.gui.add(
+            3, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+        )
+        self.gui.add(
+            4, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
         )
 
     def update_conf(self, conf: Conf | None):

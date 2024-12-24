@@ -4,7 +4,7 @@ from typing import Tuple
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
-from sprint_the_game.gui.static import StaticGUI
+from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
 from dataclasses import dataclass
 
@@ -16,7 +16,7 @@ class LevelConf(Conf):
 
 class Level:
     def __init__(self, conf: LevelConf):
-        self.gui = StaticGUI()
+        self.gui = StaticButtons()
 
         self.events: list[GameEvent] = []
 

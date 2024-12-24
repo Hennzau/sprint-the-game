@@ -4,7 +4,8 @@ from typing import Tuple
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
-from sprint_the_game.gui.static import StaticGUI
+from sprint_the_game.gui.dynamic_buttons import DynamicButtons
+from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
 
 
@@ -14,12 +15,16 @@ class LevelEditorConf(Conf):
 
 class LevelEditor:
     def __init__(self, conf: LevelEditorConf):
-        self.gui = StaticGUI()
+        self.gui = DynamicButtons()
 
         self.events: list[GameEvent] = []
 
-        self.gui.add(
-            0, "Back", lambda: self.events.append(GameEvent.LEVEL_EDITOR_TO_MAIN_MENU)
+        self.gui.add(pyxel.KEY_Q, 12, 123,
+            "Hold q to go back", lambda: self.events.append(GameEvent.LEVEL_EDITOR_TO_MAIN_MENU)
+        )
+
+        self.gui.add(pyxel.KEY_E, 148, 123,
+            "Hold e to select a level", lambda: self.events.append(GameEvent.LEVEL_EDITOR_TO_MAIN_MENU)
         )
 
     def update_conf(self, conf: Conf | None):
