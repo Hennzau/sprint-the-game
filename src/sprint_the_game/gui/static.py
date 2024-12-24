@@ -7,7 +7,7 @@ import pyxel
 class StaticGUI:
     def __init__(self):
         self.buttons: list[list[Tuple[str, Callable]]] = [[], [], [], [], []]
-        self.button = (0, 0)
+        self.button = None
 
     def add(self, line: int, str: str, callback: Callable) -> None:
         if line >= 5:
@@ -15,7 +15,7 @@ class StaticGUI:
 
         self.buttons[line].append((str, callback))
 
-    def vertical_level(self) -> int:
+    def max_vertical_level(self) -> int:
         if not len(self.buttons[4]) == 0:
             return 5
         elif not len(self.buttons[3]) == 0:
@@ -29,12 +29,26 @@ class StaticGUI:
 
         return 0
 
+    def min_vertical_level(self) -> int:
+        if not len(self.buttons[0]) == 0:
+            return 1
+        elif not len(self.buttons[1]) == 0:
+            return 2
+        elif not len(self.buttons[2]) == 0:
+            return 3
+        elif not len(self.buttons[3]) == 0:
+            return 4
+        elif not len(self.buttons[4]) == 0:
+            return 5
+
+        return 6
+
     def update(self):
-        if self.vertical_level() == 0:
+        if self.max_vertical_level() == 0:
             return
 
         if self.button is None:
-            v = self.vertical_level() - 1
+            v = self.min_vertical_level() - 1
             self.button = (0, v)
 
         if pyxel.btnp(pyxel.KEY_LEFT):
@@ -55,7 +69,7 @@ class StaticGUI:
                 )
 
         if pyxel.btnp(pyxel.KEY_DOWN):
-            v = self.vertical_level()
+            v = self.max_vertical_level()
 
             if len(self.buttons[min(self.button[1] + 1, v - 1)]) >= self.button[0] + 1:
                 self.button = (self.button[0], min(self.button[1] + 1, v - 1))
@@ -71,13 +85,17 @@ class StaticGUI:
                     self.buttons[self.button[1]][self.button[0]][1]()
 
     def draw(self):
-        if self.vertical_level() == 0:
+        if self.max_vertical_level() == 0:
             return
 
         max_horizontal = max(
-            len(self.buttons[1]), len(self.buttons[0]), len(self.buttons[2]), len(self.buttons[3]), len(self.buttons[4])
+            len(self.buttons[1]),
+            len(self.buttons[0]),
+            len(self.buttons[2]),
+            len(self.buttons[3]),
+            len(self.buttons[4]),
         )
-        max_vertical = self.vertical_level()
+        max_vertical = self.max_vertical_level()
 
         size_w = (256 - 64) // max(2, max_horizontal)
         size_h = (144 - 64) // max(3, max_vertical)
@@ -89,19 +107,19 @@ class StaticGUI:
                 gap_x = 1
                 gap_y = 1
 
-                x = (
-                    256 - size_w * len(self.buttons[j])
-                ) // 2
+                x = (256 - size_w * len(self.buttons[j])) // 2
 
                 pyxel.rect(
-                    x + size_w * i + gap_x, y + size_h * j + gap_y, size_w - gap_x * 2, size_h - gap_y * 2, 1
+                    x + size_w * i + gap_x,
+                    y + size_h * j + gap_y,
+                    size_w - gap_x * 2,
+                    size_h - gap_y * 2,
+                    1,
                 )
 
         for j in range(len(self.buttons)):
             for i, (str, _) in enumerate(self.buttons[j]):
-                x = (
-                    256 - size_w * len(self.buttons[j])
-                ) // 2
+                x = (256 - size_w * len(self.buttons[j])) // 2
 
                 s_t = len(str) * 4
 
@@ -134,6 +152,4 @@ class StaticGUI:
                         1,
                     )
 
-                pyxel.text(
-                    tx + size_w * i, ty + size_h * j, str, color, None
-                )
+                pyxel.text(tx + size_w * i, ty + size_h * j, str, color, None)

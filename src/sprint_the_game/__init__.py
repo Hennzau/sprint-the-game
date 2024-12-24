@@ -1,5 +1,6 @@
 import pyxel
 
+from sprint_the_game.game.level import Level, LevelConf
 from sprint_the_game.game.level_editor import LevelEditor, LevelEditorConf
 from sprint_the_game.game.level_selector import LevelSelector, LevelSelectorConf
 from sprint_the_game.game.main_menu import MainMenu, MainMenuConf
@@ -17,7 +18,8 @@ class App:
             GameState.MAIN_MENU: MainMenu(MainMenuConf()),
             GameState.OPTIONS: Options(OptionsConf()),
             GameState.LEVEL_EDITOR: LevelEditor(LevelEditorConf()),
-            GameState.LEVEL_SELECTOR: LevelSelector(LevelSelectorConf())
+            GameState.LEVEL_SELECTOR: LevelSelector(LevelSelectorConf()),
+            GameState.LEVEL: Level(LevelConf(None)),
         }
 
         self.current_state = GameState.MAIN_MENU

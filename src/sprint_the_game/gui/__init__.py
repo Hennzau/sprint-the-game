@@ -1,5 +1,6 @@
 import pyxel
 
+
 def text_box(x: int, y: int, text: str):
     size = len(text)
 

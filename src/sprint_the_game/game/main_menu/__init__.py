@@ -3,7 +3,7 @@ import pyxel
 from typing import Tuple
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
-from sprint_the_game.game import Conf, level_selector
+from sprint_the_game.game import Conf
 from sprint_the_game.gui.static import StaticGUI
 from sprint_the_game.state import GameState
 
@@ -19,7 +19,9 @@ class MainMenu:
         self.events: list[GameEvent] = []
 
         self.gui.add(
-            0, "Start", lambda: self.events.append(GameEvent.MAIN_MENU_TO_LEVEL_SELECTOR)
+            0,
+            "Start",
+            lambda: self.events.append(GameEvent.MAIN_MENU_TO_LEVEL_SELECTOR),
         )
         self.gui.add(
             0, "Editor", lambda: self.events.append(GameEvent.MAIN_MENU_TO_LEVEL_EDITOR)
@@ -27,9 +29,7 @@ class MainMenu:
         self.gui.add(
             1, "Options", lambda: self.events.append(GameEvent.MAIN_MENU_TO_OPTIONS)
         )
-        self.gui.add(
-            2, "Quit", lambda: self.events.append(GameEvent.MAIN_MENU_TO_QUIT)
-        )
+        self.gui.add(2, "Quit", lambda: self.events.append(GameEvent.MAIN_MENU_TO_QUIT))
 
     def update_conf(self, conf: Conf | None):
         pass
