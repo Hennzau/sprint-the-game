@@ -1,6 +1,9 @@
 import pyxel
 
+from sprint_the_game.game.level_editor import LevelEditor, LevelEditorConf
+from sprint_the_game.game.level_selector import LevelSelector, LevelSelectorConf
 from sprint_the_game.game.main_menu import MainMenu, MainMenuConf
+from sprint_the_game.game.options import Options, OptionsConf
 from sprint_the_game.state import GameState
 
 
@@ -10,7 +13,12 @@ class App:
 
         pyxel.load("../../my_resource.pyxres")
 
-        self.state = {GameState.MAIN_MENU: MainMenu(MainMenuConf())}
+        self.state = {
+            GameState.MAIN_MENU: MainMenu(MainMenuConf()),
+            GameState.OPTIONS: Options(OptionsConf()),
+            GameState.LEVEL_EDITOR: LevelEditor(LevelEditorConf()),
+            GameState.LEVEL_SELECTOR: LevelSelector(LevelSelectorConf())
+        }
 
         self.current_state = GameState.MAIN_MENU
 
