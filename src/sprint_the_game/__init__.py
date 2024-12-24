@@ -1,5 +1,8 @@
 import pyxel
 
+from sprint_the_game.game.main_menu import MainMenu, MainMenuConf
+from sprint_the_game.state import GameState
+
 
 class App:
     def __init__(self):
@@ -7,14 +10,27 @@ class App:
 
         pyxel.load("../../my_resource.pyxres")
 
+        self.state = {GameState.MAIN_MENU: MainMenu(MainMenuConf())}
+
+        self.current_state = GameState.MAIN_MENU
+
     def run(self):
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        pass
+        (next_state, conf) = self.state[self.current_state].update()
+
+        if next_state == GameState.QUIT:
+            pyxel.quit()
+            return
+
+        self.state[next_state].update_conf(conf)
+        self.current_state = next_state
 
     def draw(self):
         pyxel.cls(0)
+
+        self.state[self.current_state].draw()
 
 
 def main() -> None:
