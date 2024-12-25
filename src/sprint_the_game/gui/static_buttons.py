@@ -16,10 +16,7 @@ class StaticButtons:
         self.buttons[line].append((str, callback))
 
     def modify_text(self, line: int, i: int, str: str):
-        self.buttons[line][i] = (
-            str,
-            self.buttons[line][i][1]
-        )
+        self.buttons[line][i] = (str, self.buttons[line][i][1])
 
     def max_vertical_level(self) -> int:
         if not len(self.buttons[4]) == 0:

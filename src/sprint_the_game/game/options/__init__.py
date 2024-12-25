@@ -102,20 +102,22 @@ class Options:
             self.conf = conf
 
             self.gui.modify_text(
-                0, 0,
-                "Enable Main Theme" if not self.conf.main_theme else "Disable Main Theme"
+                0,
+                0,
+                "Enable Main Theme"
+                if not self.conf.main_theme
+                else "Disable Main Theme",
             )
             self.gui.modify_text(
-                1, 0,
-                "Enable Sounds" if not self.conf.sounds else "Disable Sounds"
+                1, 0, "Enable Sounds" if not self.conf.sounds else "Disable Sounds"
             )
             self.gui.modify_text(
-                2, 0,
-                "Enable Lights" if not self.conf.lights else "Disable Lights"
+                2, 0, "Enable Lights" if not self.conf.lights else "Disable Lights"
             )
             self.gui.modify_text(
-                3, 0,
-                "Enable Particles" if not self.conf.particles else "Disable Particles"
+                3,
+                0,
+                "Enable Particles" if not self.conf.particles else "Disable Particles",
             )
 
     def update(self) -> Tuple[GameState, Conf | None]:
