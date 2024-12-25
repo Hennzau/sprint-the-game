@@ -1,6 +1,6 @@
 import pyxel
 
-from typing import Tuple
+from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
@@ -18,17 +18,13 @@ class Level:
     def __init__(self, conf: LevelConf):
         self.gui = StaticButtons()
 
-        self.events: list[GameEvent] = []
+        self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
         self.selected_level = None
 
         self.gui.add(
-            3, "Back", lambda: self.events.append(GameEvent.LEVEL_TO_LEVEL_SELECTOR)
+            3, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None))
         )
-
-    def level_event(self, level: int):
-        self.selected_level = level
-        self.events.append(GameEvent.LEVEL_SELECTOR_TO_LEVEL)
 
     def update_conf(self, conf: Conf | None):
         if not isinstance(conf, LevelConf):
@@ -40,10 +36,10 @@ class Level:
         self.gui.update()
 
         while len(self.events) > 0:
-            event = self.events.pop()
+            (event, state, conf) = self.events.pop()
 
-            if event == GameEvent.LEVEL_TO_LEVEL_SELECTOR:
-                return (GameState.LEVEL_SELECTOR, None)
+            if event == GameEvent.CHANGE_STATE:
+                return (state, conf)
 
         return (GameState.LEVEL, None)
 

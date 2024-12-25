@@ -22,7 +22,7 @@ class App:
             GameState.LEVEL: Level(LevelConf(None)),
         }
 
-        self.current_state = GameState.LEVEL_EDITOR
+        self.current_state = GameState.MAIN_MENU
 
     def run(self):
         pyxel.run(self.update, self.draw)

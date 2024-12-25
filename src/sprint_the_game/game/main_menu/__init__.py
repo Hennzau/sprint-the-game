@@ -1,6 +1,6 @@
 import pyxel
 
-from typing import Tuple
+from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
@@ -16,20 +16,20 @@ class MainMenu:
     def __init__(self, conf: MainMenuConf):
         self.gui = StaticButtons()
 
-        self.events: list[GameEvent] = []
+        self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
         self.gui.add(
             0,
             "Start",
-            lambda: self.events.append(GameEvent.MAIN_MENU_TO_LEVEL_SELECTOR),
+            lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)),
         )
         self.gui.add(
-            0, "Editor", lambda: self.events.append(GameEvent.MAIN_MENU_TO_LEVEL_EDITOR)
+            0, "Editor", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR, None))
         )
         self.gui.add(
-            1, "Options", lambda: self.events.append(GameEvent.MAIN_MENU_TO_OPTIONS)
+            1, "Options", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.OPTIONS, None))
         )
-        self.gui.add(2, "Quit", lambda: self.events.append(GameEvent.MAIN_MENU_TO_QUIT))
+        self.gui.add(2, "Quit", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.QUIT, None)))
 
     def update_conf(self, conf: Conf | None):
         pass
@@ -38,19 +38,10 @@ class MainMenu:
         self.gui.update()
 
         while len(self.events) > 0:
-            event = self.events.pop()
+            (event, state, conf) = self.events.pop()
 
-            if event == GameEvent.MAIN_MENU_TO_QUIT:
-                return (GameState.QUIT, None)
-
-            if event == GameEvent.MAIN_MENU_TO_OPTIONS:
-                return (GameState.OPTIONS, None)
-
-            if event == GameEvent.MAIN_MENU_TO_LEVEL_EDITOR:
-                return (GameState.LEVEL_EDITOR, None)
-
-            if event == GameEvent.MAIN_MENU_TO_LEVEL_SELECTOR:
-                return (GameState.LEVEL_SELECTOR, None)
+            if event == GameEvent.CHANGE_STATE:
+                return (state, conf)
 
         return (GameState.MAIN_MENU, None)
 

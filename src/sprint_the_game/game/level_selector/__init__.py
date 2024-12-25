@@ -17,12 +17,12 @@ class LevelSelector:
     def __init__(self, conf: LevelSelectorConf):
         self.gui = StaticButtons()
 
-        self.events: list[Tuple[GameEvent, Union[int, None]]] = []
+        self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
         self.gui.add(
             3,
             "Back",
-            lambda: self.events.append((GameEvent.LEVEL_SELECTOR_TO_MAIN_MENU, None)),
+            lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)),
         )
 
         for i in range(3):
@@ -33,7 +33,7 @@ class LevelSelector:
                     i,
                     "Level " + str(level),
                     lambda level=level: self.events.append(
-                        (GameEvent.LEVEL_SELECTOR_TO_LEVEL, level)
+                        (GameEvent.CHANGE_STATE, GameState.LEVEL, LevelConf(level))
                     ),
                 )
 
@@ -44,13 +44,10 @@ class LevelSelector:
         self.gui.update()
 
         while len(self.events) > 0:
-            (event, level) = self.events.pop()
+            (event, state, conf) = self.events.pop()
 
-            if event == GameEvent.LEVEL_SELECTOR_TO_MAIN_MENU:
-                return (GameState.MAIN_MENU, None)
-
-            if event == GameEvent.LEVEL_SELECTOR_TO_LEVEL:
-                return (GameState.LEVEL, LevelConf(level))
+            if event == GameEvent.CHANGE_STATE:
+                return (state, conf)
 
         return (GameState.LEVEL_SELECTOR, None)
 

@@ -1,6 +1,6 @@
 import pyxel
 
-from typing import Tuple
+from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
@@ -16,22 +16,22 @@ class Options:
     def __init__(self, conf: OptionsConf):
         self.gui = StaticButtons()
 
-        self.events: list[GameEvent] = []
+        self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
         self.gui.add(
-            0, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+            0, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
         )
         self.gui.add(
-            1, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+            1, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
         )
         self.gui.add(
-            2, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+            2, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
         )
         self.gui.add(
-            3, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+            3, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
         )
         self.gui.add(
-            4, "Back", lambda: self.events.append(GameEvent.OPTIONS_TO_MAIN_MENU)
+            4, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
         )
 
     def update_conf(self, conf: Conf | None):
@@ -41,10 +41,10 @@ class Options:
         self.gui.update()
 
         while len(self.events) > 0:
-            event = self.events.pop()
+            (event, state, conf) = self.events.pop()
 
-            if event == GameEvent.OPTIONS_TO_MAIN_MENU:
-                return (GameState.MAIN_MENU, None)
+            if event == GameEvent.CHANGE_STATE:
+                return (state, conf)
 
         return (GameState.OPTIONS, None)
 

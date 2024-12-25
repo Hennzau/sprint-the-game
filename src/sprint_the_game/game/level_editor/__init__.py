@@ -1,6 +1,6 @@
 import pyxel
 
-from typing import Tuple
+from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
@@ -17,14 +17,14 @@ class LevelEditor:
     def __init__(self, conf: LevelEditorConf):
         self.gui = DynamicButtons()
 
-        self.events: list[GameEvent] = []
+        self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
         self.gui.add(pyxel.KEY_Q, 12, 123,
-            "Hold q to go back", lambda: self.events.append(GameEvent.LEVEL_EDITOR_TO_MAIN_MENU)
+            "Hold q to go back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None))
         )
 
         self.gui.add(pyxel.KEY_E, 148, 123,
-            "Hold e to select a level", lambda: self.events.append(GameEvent.LEVEL_EDITOR_TO_MAIN_MENU)
+            "Hold e to select a level", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None))
         )
 
     def update_conf(self, conf: Conf | None):
@@ -34,10 +34,10 @@ class LevelEditor:
         self.gui.update()
 
         while len(self.events) > 0:
-            event = self.events.pop()
+            (event, state, conf) = self.events.pop()
 
-            if event == GameEvent.LEVEL_EDITOR_TO_MAIN_MENU:
-                return (GameState.MAIN_MENU, None)
+            if event == GameEvent.CHANGE_STATE:
+                return (state, conf)
 
         return (GameState.LEVEL_EDITOR, None)
 
