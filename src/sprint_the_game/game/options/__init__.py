@@ -12,8 +12,8 @@ from sprint_the_game.state import GameState
 
 @dataclass
 class OptionsConf(Conf):
-    main_theme: bool
-    sounds: bool
+    main_theme: bool = True
+    sounds: bool = True
 
 
 class Options:

@@ -14,7 +14,7 @@ from dataclasses import dataclass
 
 @dataclass
 class LevelConf(Conf):
-    selected_level: int | None
+    selected_level: int | None = None
 
 
 class Level:
@@ -54,7 +54,7 @@ class Level:
                 (
                     GameEvent.CHANGE_STATE,
                     GameState.LEVEL_EDITOR,
-                    LevelEditorConf(selected_level=self.conf.selected_level, selected_tile=Tile.WALL),
+                    LevelEditorConf(selected_level=self.conf.selected_level),
                 )
             ),
         )

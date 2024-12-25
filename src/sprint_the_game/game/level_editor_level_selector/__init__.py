@@ -24,6 +24,19 @@ class LevelEditorLevelSelector:
 
         self.gui.add(
             3,
+            "Empty",
+            lambda: self.events.append(
+                (
+                    GameEvent.CHANGE_STATE,
+                    GameState.LEVEL_EDITOR,
+                    LevelEditorConf(
+                        selected_tile=Tile.WALL, selected_level=None, erase=True
+                    ),
+                )
+            ),
+        )
+        self.gui.add(
+            3,
             "Back",
             lambda: self.events.append(
                 (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR, None)
@@ -41,7 +54,7 @@ class LevelEditorLevelSelector:
                         (
                             GameEvent.CHANGE_STATE,
                             GameState.LEVEL_EDITOR,
-                            LevelEditorConf(selected_level=level, selected_tile=Tile.WALL),
+                            LevelEditorConf(selected_level=level, overwrite=True),
                         )
                     ),
                 )

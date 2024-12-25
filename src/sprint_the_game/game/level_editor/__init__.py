@@ -13,8 +13,10 @@ from dataclasses import dataclass
 
 @dataclass
 class LevelEditorConf(Conf):
-    selected_level: int | None
-    selected_tile: Tile
+    selected_level: int | None = None
+    selected_tile: Tile = Tile.WALL
+    erase: bool = False
+    overwrite: bool = False
 
 
 class LevelEditor:
@@ -60,9 +62,46 @@ class LevelEditor:
         pyxel.mouse(True)
 
         if isinstance(conf, LevelEditorConf):
+            can_overwrite = (
+                self.conf.selected_level is None and conf.selected_level is not None
+            )
+
             self.conf = conf
 
+            i = 0 if self.conf.selected_level is None else self.conf.selected_level
+            i, j = i % 5, i // 5
+
+            LEVEL_X, LEVEL_Y = i * 24, j * 12
+
+            if self.conf.erase:
+                u, v = Tile.EMPTY.value
+
+                for i in range(24):
+                    for j in range(12):
+                        pyxel.tilemaps[1].set(
+                            i,
+                            j,
+                            [f"0{u}0{v} "],
+                        )
+
+            elif (
+                self.conf.overwrite and can_overwrite
+            ):  # copy the editor into this level
+                for i in range(24):
+                    for j in range(12):
+                        u, v = pyxel.tilemaps[1].pget(i, j)
+                        pyxel.tilemaps[1].set(
+                            LEVEL_X + i,
+                            LEVEL_Y + j,
+                            [f"0{u}0{v} "],
+                        )
+
     def update(self) -> Tuple[GameState, Conf | None]:
+        i = 0 if self.conf.selected_level is None else self.conf.selected_level
+        i, j = i % 5, i // 5
+
+        LEVEL_X, LEVEL_Y = i * 24, j * 12
+
         self.gui.update()
 
         while len(self.events) > 0:
@@ -79,15 +118,19 @@ class LevelEditor:
             x = x - 4
             y = y - 3
 
-            u, v = self.conf.selected_tile.value if pyxel.btn(pyxel.MOUSE_BUTTON_RIGHT) else Tile.EMPTY.value
+            u, v = (
+                self.conf.selected_tile.value
+                if pyxel.btn(pyxel.MOUSE_BUTTON_RIGHT)
+                else Tile.EMPTY.value
+            )
 
-            if pyxel.btn(pyxel.MOUSE_BUTTON_RIGHT) or pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            if pyxel.btn(pyxel.MOUSE_BUTTON_RIGHT) or pyxel.btn(
+                pyxel.MOUSE_BUTTON_LEFT
+            ):
                 pyxel.tilemaps[1].set(
-                    x,
-                    y,
-                    [
-                        f"0{u}0{v}"
-                    ],
+                    x + LEVEL_X,
+                    y + LEVEL_Y,
+                    [f"0{u}0{v}"],
                 )
 
         if pyxel.btnv(pyxel.MOUSE_WHEEL_Y):
@@ -99,16 +142,30 @@ class LevelEditor:
 
             print(cursor)
 
-
         return (GameState.LEVEL_EDITOR, None)
 
     def draw(self):
+        i = 0 if self.conf.selected_level is None else self.conf.selected_level
+        i, j = i % 5, i // 5
+
+        LEVEL_X, LEVEL_Y = i * 24, j * 12
+
         pyxel.bltm(0, 0, 0, pyxel.width, 0, pyxel.width, pyxel.height)
 
-        pyxel.rectb((256 - 8 * 24) // 2 - 1, (144 - 8 * 12) // 2 - 1, 24 * 8 + 2, 8 * 12 + 2, 7)
+        pyxel.rectb(
+            (256 - 8 * 24) // 2 - 1, (144 - 8 * 12) // 2 - 1, 24 * 8 + 2, 8 * 12 + 2, 7
+        )
         pyxel.rect((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 24 * 8, 8 * 12, 0)
 
-        pyxel.bltm((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 1, 0, 0, 8 * 24, 8 * 12)
+        pyxel.bltm(
+            (256 - 8 * 24) // 2,
+            (144 - 8 * 12) // 2,
+            1,
+            8 * LEVEL_X,
+            8 * LEVEL_Y,
+            8 * 24,
+            8 * 12,
+        )
 
         text = (
             "Sprint - Editor (?)"
@@ -134,4 +191,4 @@ class LevelEditor:
 
             pyxel.blt(16, i * 16, 0, u * 8, v * 8, 8, 8)
 
-        pyxel.rectb(16 - 1, - 1 + cursor * 16, 10, 10, 7)
+        pyxel.rectb(16 - 1, -1 + cursor * 16, 10, 10, 7)
