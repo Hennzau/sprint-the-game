@@ -4,6 +4,7 @@ from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
+from sprint_the_game.game.level.tile import Tile
 from sprint_the_game.game.level_editor import LevelEditorConf
 from sprint_the_game.gui.dynamic_buttons import DynamicButtons
 from sprint_the_game.gui.static_buttons import StaticButtons
@@ -53,7 +54,7 @@ class Level:
                 (
                     GameEvent.CHANGE_STATE,
                     GameState.LEVEL_EDITOR,
-                    LevelEditorConf(selected_level=self.conf.selected_level),
+                    LevelEditorConf(selected_level=self.conf.selected_level, selected_tile=Tile.WALL),
                 )
             ),
         )
@@ -79,7 +80,7 @@ class Level:
         pyxel.bltm(0, 0, 0, 0, 0, pyxel.width, pyxel.height)
 
         text = "Sprint - Level " + str(self.conf.selected_level)
-        x, y = (256 - 4 * len(text)) // 2, 16
+        x, y = (256 - 4 * len(text)) // 2, 14
 
         gui.text_box(x, y, text)
 

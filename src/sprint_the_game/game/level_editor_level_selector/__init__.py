@@ -4,6 +4,7 @@ from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
+from sprint_the_game.game.level.tile import Tile
 from sprint_the_game.game.level_editor import LevelEditorConf
 from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
@@ -40,7 +41,7 @@ class LevelEditorLevelSelector:
                         (
                             GameEvent.CHANGE_STATE,
                             GameState.LEVEL_EDITOR,
-                            LevelEditorConf(selected_level=level),
+                            LevelEditorConf(selected_level=level, selected_tile=Tile.WALL),
                         )
                     ),
                 )
@@ -63,7 +64,7 @@ class LevelEditorLevelSelector:
         pyxel.bltm(0, 0, 0, 0, 0, pyxel.width, pyxel.height)
 
         text = "Sprint - Editor Selector"
-        x, y = (256 - 4 * len(text)) // 2, 16
+        x, y = (256 - 4 * len(text)) // 2, 14
 
         gui.text_box(x, y, text)
 

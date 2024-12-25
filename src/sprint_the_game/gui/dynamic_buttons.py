@@ -49,4 +49,3 @@ class DynamicButtons:
             pyxel.text(x, y, str, color, None)
 
             pyxel.rect(x, y + 8, length, 2, 7)
-            pyxel.rectb(x - 1, y + 7, len(str) * 4 + 2, 4, 7)

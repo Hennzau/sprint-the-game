@@ -1,6 +1,7 @@
 import pyxel
 
 from sprint_the_game.game.level import Level, LevelConf
+from sprint_the_game.game.level.tile import Tile
 from sprint_the_game.game.level_editor import LevelEditor, LevelEditorConf
 from sprint_the_game.game.level_editor_level_selector import (
     LevelEditorLevelSelector,
@@ -21,7 +22,7 @@ class App:
         self.state = {
             GameState.MAIN_MENU: MainMenu(MainMenuConf()),
             GameState.OPTIONS: Options(OptionsConf(main_theme=True, sounds=True)),
-            GameState.LEVEL_EDITOR: LevelEditor(LevelEditorConf(selected_level=None)),
+            GameState.LEVEL_EDITOR: LevelEditor(LevelEditorConf(selected_level=None, selected_tile=Tile.WALL)),
             GameState.LEVEL_SELECTOR: LevelSelector(LevelSelectorConf()),
             GameState.LEVEL: Level(LevelConf(None)),
             GameState.LEVEL_EDITOR_LEVEL_SELECTOR: LevelEditorLevelSelector(
@@ -41,8 +42,11 @@ class App:
             pyxel.quit()
             return
 
-        self.state[next_state].update_conf(conf)
-        self.current_state = next_state
+        if self.current_state != next_state:
+            pyxel.mouse(False)
+
+            self.state[next_state].update_conf(conf)
+            self.current_state = next_state
 
     def draw(self):
         pyxel.cls(0)

@@ -57,7 +57,7 @@ class LevelSelector:
         pyxel.bltm(0, 0, 0, 0, 0, pyxel.width, pyxel.height)
 
         text = "Sprint - Level Selector"
-        x, y = (256 - 4 * len(text)) // 2, 16
+        x, y = (256 - 4 * len(text)) // 2, 14
 
         gui.text_box(x, y, text)
 
