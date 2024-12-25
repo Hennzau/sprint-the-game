@@ -14,6 +14,8 @@ from sprint_the_game.state import GameState
 class OptionsConf(Conf):
     main_theme: bool = True
     sounds: bool = True
+    lights: bool = True
+    particles: bool = True
 
 
 class Options:
@@ -25,42 +27,66 @@ class Options:
 
         self.gui.add(
             0,
-            "Main Theme",
+            "Disable Main Theme",
             lambda: self.events.append(
                 (
                     GameEvent.CHANGE_CONF,
                     GameState.OPTIONS,
                     OptionsConf(
-                        main_theme=not self.conf.main_theme, sounds=self.conf.sounds
+                        main_theme=not self.conf.main_theme,
+                        sounds=self.conf.sounds,
+                        lights=self.conf.lights,
+                        particles=self.conf.particles,
                     ),
                 )
             ),
         )
         self.gui.add(
             1,
-            "Sounds",
+            "Disable Sounds",
             lambda: self.events.append(
                 (
                     GameEvent.CHANGE_CONF,
                     GameState.OPTIONS,
                     OptionsConf(
-                        main_theme=self.conf.main_theme, sounds=not self.conf.sounds
+                        main_theme=self.conf.main_theme,
+                        sounds=not self.conf.sounds,
+                        lights=self.conf.lights,
+                        particles=self.conf.particles,
                     ),
                 )
             ),
         )
         self.gui.add(
             2,
-            "Option",
+            "Disable Lights",
             lambda: self.events.append(
-                (GameEvent.CHANGE_CONF, GameState.OPTIONS, None)
+                (
+                    GameEvent.CHANGE_CONF,
+                    GameState.OPTIONS,
+                    OptionsConf(
+                        main_theme=self.conf.main_theme,
+                        sounds=self.conf.sounds,
+                        lights=not self.conf.lights,
+                        particles=self.conf.particles,
+                    ),
+                )
             ),
         )
         self.gui.add(
             3,
-            "Option",
+            "Disable Particles",
             lambda: self.events.append(
-                (GameEvent.CHANGE_CONF, GameState.OPTIONS, None)
+                (
+                    GameEvent.CHANGE_CONF,
+                    GameState.OPTIONS,
+                    OptionsConf(
+                        main_theme=self.conf.main_theme,
+                        sounds=self.conf.sounds,
+                        lights=self.conf.lights,
+                        particles=not self.conf.particles,
+                    ),
+                )
             ),
         )
         self.gui.add(
@@ -74,6 +100,23 @@ class Options:
     def update_conf(self, conf: Conf | None):
         if isinstance(conf, OptionsConf):
             self.conf = conf
+
+            self.gui.modify_text(
+                0, 0,
+                "Enable Main Theme" if not self.conf.main_theme else "Disable Main Theme"
+            )
+            self.gui.modify_text(
+                1, 0,
+                "Enable Sounds" if not self.conf.sounds else "Disable Sounds"
+            )
+            self.gui.modify_text(
+                2, 0,
+                "Enable Lights" if not self.conf.lights else "Disable Lights"
+            )
+            self.gui.modify_text(
+                3, 0,
+                "Enable Particles" if not self.conf.particles else "Disable Particles"
+            )
 
     def update(self) -> Tuple[GameState, Conf | None]:
         self.gui.update()

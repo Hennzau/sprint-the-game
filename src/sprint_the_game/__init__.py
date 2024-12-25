@@ -30,7 +30,7 @@ class App:
             ),
         }
 
-        self.current_state = GameState.LEVEL_EDITOR
+        self.current_state = GameState.OPTIONS
 
     def run(self):
         pyxel.run(self.update, self.draw)
@@ -45,8 +45,8 @@ class App:
         if self.current_state != next_state:
             pyxel.mouse(False)
 
-            self.state[next_state].update_conf(conf)
-            self.current_state = next_state
+        self.state[next_state].update_conf(conf)
+        self.current_state = next_state
 
     def draw(self):
         pyxel.cls(0)

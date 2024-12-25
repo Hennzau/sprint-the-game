@@ -77,10 +77,30 @@ class Level:
         return (GameState.LEVEL, None)
 
     def draw(self):
-        pyxel.bltm(0, 0, 0, 0, 0, pyxel.width, pyxel.height)
+        i = 0 if self.conf.selected_level is None else self.conf.selected_level
+        i, j = i % 5, i // 5
+
+        LEVEL_X, LEVEL_Y = i * 24, j * 12
+
+        pyxel.bltm(0, 0, 0, pyxel.width, 0, pyxel.width, pyxel.height)
+
+        pyxel.rectb(
+            (256 - 8 * 24) // 2 - 1, (144 - 8 * 12) // 2 - 1, 24 * 8 + 2, 8 * 12 + 2, 7
+        )
+        pyxel.rect((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 24 * 8, 8 * 12, 0)
+
+        pyxel.bltm(
+            (256 - 8 * 24) // 2,
+            (144 - 8 * 12) // 2,
+            1,
+            8 * LEVEL_X,
+            8 * LEVEL_Y,
+            8 * 24,
+            8 * 12,
+        )
 
         text = "Sprint - Level " + str(self.conf.selected_level)
-        x, y = (256 - 4 * len(text)) // 2, 14
+        x, y = (256 - 4 * len(text)) // 2, 13
 
         gui.text_box(x, y, text)
 
