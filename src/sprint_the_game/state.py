@@ -8,3 +8,4 @@ class GameState(Enum):
     LEVEL_EDITOR = 3
     LEVEL_SELECTOR = 4
     LEVEL = 5
+    LEVEL_EDITOR_LEVEL_SELECTOR = 6

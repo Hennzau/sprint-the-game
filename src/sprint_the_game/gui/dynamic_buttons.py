@@ -17,6 +17,8 @@ class DynamicButtons:
         self.progress[key] = (0.0, 0.0)
 
     def update(self):
+        reset = False
+
         for key in self.buttons:
             if pyxel.btnr(key):
                 self.progress[key] = (0.0, 0.0)
@@ -27,14 +29,16 @@ class DynamicButtons:
                 else:
                     progress = time.time() - self.progress[key][0]  # type: ignore
                     if progress >= 0.5:
-                        self.progress[key] = (0.0, 0.0)
-
+                        reset = True
                         (x, y), (str, callable) = self.buttons[key]
 
                         callable()
-
                     else:
                         self.progress[key] = (self.progress[key][0], progress)  # type: ignore
+
+        if reset:
+            for key in self.buttons:
+                self.progress[key] = (0.0, 0.0)
 
     def draw(self):
         for key in self.buttons:
@@ -45,3 +49,4 @@ class DynamicButtons:
             pyxel.text(x, y, str, color, None)
 
             pyxel.rect(x, y + 8, length, 2, 7)
+            pyxel.rectb(x - 1, y + 7, len(str) * 4 + 2, 4, 7)

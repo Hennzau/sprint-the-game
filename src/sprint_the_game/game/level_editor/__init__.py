@@ -7,10 +7,12 @@ from sprint_the_game.game import Conf
 from sprint_the_game.gui.dynamic_buttons import DynamicButtons
 from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
+from dataclasses import dataclass
 
 
+@dataclass
 class LevelEditorConf(Conf):
-    pass
+    selected_level: int | None
 
 
 class LevelEditor:
@@ -18,6 +20,7 @@ class LevelEditor:
         self.gui = DynamicButtons()
 
         self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
+        self.conf = conf
 
         self.gui.add(
             pyxel.KEY_Q,
@@ -35,12 +38,13 @@ class LevelEditor:
             123,
             "Hold e to select a level",
             lambda: self.events.append(
-                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
+                (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR_LEVEL_SELECTOR, None)
             ),
         )
 
     def update_conf(self, conf: Conf | None):
-        pass
+        if isinstance(conf, LevelEditorConf):
+            self.conf = conf
 
     def update(self) -> Tuple[GameState, Conf | None]:
         self.gui.update()
@@ -56,7 +60,11 @@ class LevelEditor:
     def draw(self):
         pyxel.bltm(0, 0, 0, 0, 0, pyxel.width, pyxel.height)
 
-        text = "Sprint - Editor"
+        text = (
+            "Sprint - Editor (?)"
+            if self.conf.selected_level is None
+            else f"Sprint - Editor ({self.conf.selected_level})"
+        )
         x, y = (256 - 4 * len(text)) // 2, 16
 
         gui.text_box(x, y, text)
