@@ -22,7 +22,9 @@ class LevelSelector:
         self.gui.add(
             3,
             "Back",
-            lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)),
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
+            ),
         )
 
         for i in range(3):

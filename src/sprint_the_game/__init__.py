@@ -16,7 +16,7 @@ class App:
 
         self.state = {
             GameState.MAIN_MENU: MainMenu(MainMenuConf()),
-            GameState.OPTIONS: Options(OptionsConf()),
+            GameState.OPTIONS: Options(OptionsConf(main_theme=True, sounds=True)),
             GameState.LEVEL_EDITOR: LevelEditor(LevelEditorConf()),
             GameState.LEVEL_SELECTOR: LevelSelector(LevelSelectorConf()),
             GameState.LEVEL: Level(LevelConf(None)),

@@ -21,15 +21,29 @@ class MainMenu:
         self.gui.add(
             0,
             "Start",
-            lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)),
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)
+            ),
         )
         self.gui.add(
-            0, "Editor", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR, None))
+            0,
+            "Editor",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR, None)
+            ),
         )
         self.gui.add(
-            1, "Options", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.OPTIONS, None))
+            1,
+            "Options",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.OPTIONS, None)
+            ),
         )
-        self.gui.add(2, "Quit", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.QUIT, None)))
+        self.gui.add(
+            2,
+            "Quit",
+            lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.QUIT, None)),
+        )
 
     def update_conf(self, conf: Conf | None):
         pass

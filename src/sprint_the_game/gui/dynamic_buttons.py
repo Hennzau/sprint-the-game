@@ -13,10 +13,7 @@ class DynamicButtons:
         self.progress: dict[int, Tuple[float, float]] = {}
 
     def add(self, key: int, x: int, y: int, str: str, callback: Callable) -> None:
-        self.buttons[key] = (
-            (x, y),
-            (str, callback)
-        )
+        self.buttons[key] = ((x, y), (str, callback))
         self.progress[key] = (0.0, 0.0)
 
     def update(self):
@@ -28,7 +25,7 @@ class DynamicButtons:
                 if self.progress[key] == (0.0, 0.0):
                     self.progress[key] = (time.time(), 0.0)
                 else:
-                    progress = time.time() - self.progress[key][0] # type: ignore
+                    progress = time.time() - self.progress[key][0]  # type: ignore
                     if progress >= 0.5:
                         self.progress[key] = (0.0, 0.0)
 
@@ -37,7 +34,7 @@ class DynamicButtons:
                         callable()
 
                     else:
-                        self.progress[key] = (self.progress[key][0], progress) # type: ignore
+                        self.progress[key] = (self.progress[key][0], progress)  # type: ignore
 
     def draw(self):
         for key in self.buttons:

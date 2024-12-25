@@ -19,12 +19,24 @@ class LevelEditor:
 
         self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
-        self.gui.add(pyxel.KEY_Q, 12, 123,
-            "Hold q to go back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None))
+        self.gui.add(
+            pyxel.KEY_Q,
+            12,
+            123,
+            "Hold q to go back",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
+            ),
         )
 
-        self.gui.add(pyxel.KEY_E, 148, 123,
-            "Hold e to select a level", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None))
+        self.gui.add(
+            pyxel.KEY_E,
+            148,
+            123,
+            "Hold e to select a level",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
+            ),
         )
 
     def update_conf(self, conf: Conf | None):

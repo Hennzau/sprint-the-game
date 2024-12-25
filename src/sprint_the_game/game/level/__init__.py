@@ -23,7 +23,11 @@ class Level:
         self.selected_level = None
 
         self.gui.add(
-            3, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None))
+            3,
+            "Back",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)
+            ),
         )
 
     def update_conf(self, conf: Conf | None):

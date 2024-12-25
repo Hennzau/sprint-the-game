@@ -1,5 +1,7 @@
 import pyxel
 
+from dataclasses import dataclass
+
 from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
@@ -8,34 +10,70 @@ from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
 
 
+@dataclass
 class OptionsConf(Conf):
-    pass
+    main_theme: bool
+    sounds: bool
 
 
 class Options:
     def __init__(self, conf: OptionsConf):
         self.gui = StaticButtons()
+        self.conf = conf
 
         self.events: list[Tuple[GameEvent, GameState, Union[Conf, None]]] = []
 
         self.gui.add(
-            0, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
+            0,
+            "Main Theme",
+            lambda: self.events.append(
+                (
+                    GameEvent.CHANGE_CONF,
+                    GameState.OPTIONS,
+                    OptionsConf(
+                        main_theme=not self.conf.main_theme, sounds=self.conf.sounds
+                    ),
+                )
+            ),
         )
         self.gui.add(
-            1, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
+            1,
+            "Sounds",
+            lambda: self.events.append(
+                (
+                    GameEvent.CHANGE_CONF,
+                    GameState.OPTIONS,
+                    OptionsConf(
+                        main_theme=self.conf.main_theme, sounds=not self.conf.sounds
+                    ),
+                )
+            ),
         )
         self.gui.add(
-            2, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
+            2,
+            "Option",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_CONF, GameState.OPTIONS, None)
+            ),
         )
         self.gui.add(
-            3, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
+            3,
+            "Option",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_CONF, GameState.OPTIONS, None)
+            ),
         )
         self.gui.add(
-            4, "Back", lambda: self.events.append((GameEvent.CHANGE_STATE, GameState.MAIN_MENU,None))
+            4,
+            "Back",
+            lambda: self.events.append(
+                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
+            ),
         )
 
     def update_conf(self, conf: Conf | None):
-        pass
+        if isinstance(conf, OptionsConf):
+            self.conf = conf
 
     def update(self) -> Tuple[GameState, Conf | None]:
         self.gui.update()
@@ -45,6 +83,8 @@ class Options:
 
             if event == GameEvent.CHANGE_STATE:
                 return (state, conf)
+            elif event == GameEvent.CHANGE_CONF:
+                return (GameState.OPTIONS, conf)
 
         return (GameState.OPTIONS, None)
 
