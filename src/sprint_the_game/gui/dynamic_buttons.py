@@ -1,10 +1,8 @@
-from typing import Tuple, Union
+from typing import Tuple
 from typing import Callable
 
 import pyxel
 import time
-
-from sprint_the_game import gui
 
 
 class DynamicButtons:

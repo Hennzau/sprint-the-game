@@ -4,10 +4,8 @@ from typing import Tuple, Union
 from sprint_the_game import gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
-from sprint_the_game.game.level.tile import Tile
 from sprint_the_game.game.level_editor import LevelEditorConf
 from sprint_the_game.gui.dynamic_buttons import DynamicButtons
-from sprint_the_game.gui.static_buttons import StaticButtons
 from sprint_the_game.state import GameState
 from dataclasses import dataclass
 

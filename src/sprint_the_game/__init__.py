@@ -1,7 +1,6 @@
 import pyxel
 
 from sprint_the_game.game.level import Level, LevelConf
-from sprint_the_game.game.level.tile import Tile
 from sprint_the_game.game.level_editor import LevelEditor, LevelEditorConf
 from sprint_the_game.game.level_editor_level_selector import (
     LevelEditorLevelSelector,
