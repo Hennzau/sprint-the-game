@@ -95,7 +95,7 @@ class Level:
             8 * LEVEL_Y,
             8 * 24,
             8 * 12,
-            0
+            0,
         )
 
         text = "Sprint - Level " + str(self.conf.selected_level)

@@ -161,7 +161,7 @@ class LevelEditor:
             8 * LEVEL_Y,
             8 * 24,
             8 * 12,
-            0
+            0,
         )
 
         text = (
@@ -187,7 +187,7 @@ class LevelEditor:
             u, v = tiles[i].value
 
             y, x = i % 6, i // 6
-            pyxel.blt(4 + x * 16 + x//2 * 199, 24 + y * 16, 0, u * 8, v * 8, 8, 8, 0)
+            pyxel.blt(4 + x * 16 + x // 2 * 199, 24 + y * 16, 0, u * 8, v * 8, 8, 8, 0)
 
         y, x = cursor % 6, cursor // 6
-        pyxel.rectb(4 + x * 16 + x//2 * 199 - 1, 24 + y * 16 - 1, 10, 10, 7)
+        pyxel.rectb(4 + x * 16 + x // 2 * 199 - 1, 24 + y * 16 - 1, 10, 10, 7)

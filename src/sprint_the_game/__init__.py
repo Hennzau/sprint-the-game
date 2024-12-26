@@ -56,7 +56,10 @@ class App:
             return
 
         if next_state == GameState.GO_BACK:
-            self.latest_state, self.current_state  = self.current_state, self.latest_state
+            self.latest_state, self.current_state = (
+                self.current_state,
+                self.latest_state,
+            )
             return
 
         if self.current_state != next_state:
