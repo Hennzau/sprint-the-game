@@ -29,7 +29,7 @@ class App:
             ),
         }
 
-        self.current_state = GameState.OPTIONS
+        self.current_state = GameState.MAIN_MENU
 
     def run(self):
         pyxel.run(self.update, self.draw)

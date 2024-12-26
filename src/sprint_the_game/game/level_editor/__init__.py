@@ -55,8 +55,6 @@ class LevelEditor:
             ),
         )
 
-        pyxel.mouse(True)
-
     def update_conf(self, conf: Conf | None):
         pyxel.mouse(True)
 
