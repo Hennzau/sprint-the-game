@@ -17,7 +17,7 @@ resource_path = None
 
 class App:
     def __init__(self):
-        pyxel.init(256, 144, title="Sprint The Game", display_scale=5)
+        pyxel.init(256, 144, title="Sprint The Game", display_scale=5, fps=120)
 
         parser = argparse.ArgumentParser(
             prog="Sprint The Game",
@@ -42,7 +42,7 @@ class App:
             ),
         }
 
-        self.current_state = GameState.MAIN_MENU
+        self.current_state = GameState.LEVEL_EDITOR
 
     def run(self):
         pyxel.run(self.update, self.draw)

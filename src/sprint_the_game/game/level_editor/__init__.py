@@ -29,7 +29,7 @@ class LevelEditor:
         self.gui.add(
             pyxel.KEY_Q,
             12,
-            123,
+            132,
             "Hold q to go back",
             lambda: self.events.append(
                 (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
@@ -39,7 +39,7 @@ class LevelEditor:
         self.gui.add(
             pyxel.KEY_SPACE,
             92,
-            123,
+            132,
             "Hold space to save",
             lambda: self.events.append(
                 (GameEvent.SAVE_LEVEL, GameState.LEVEL_EDITOR, None)
@@ -49,7 +49,7 @@ class LevelEditor:
         self.gui.add(
             pyxel.KEY_E,
             180,
-            123,
+            132,
             "Hold e to select",
             lambda: self.events.append(
                 (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR_LEVEL_SELECTOR, None)
@@ -135,7 +135,7 @@ class LevelEditor:
             tiles = [tile for tile in Tile]
             cursor = tiles.index(self.conf.selected_tile)
 
-            cursor = max(1, min(len(tiles) - 1, cursor - pyxel.mouse_wheel))
+            cursor = max(0, min(len(tiles) - 2, cursor - pyxel.mouse_wheel))
             self.conf.selected_tile = tiles[cursor]
 
         return (GameState.LEVEL_EDITOR, None)
@@ -146,7 +146,7 @@ class LevelEditor:
 
         LEVEL_X, LEVEL_Y = i * 24, j * 12
 
-        pyxel.bltm(0, 0, 0, pyxel.width, 0, pyxel.width, pyxel.height)
+        pyxel.bltm(0, 0, 0, pyxel.width * 2, 0, pyxel.width, pyxel.height)
 
         pyxel.rectb(
             (256 - 8 * 24) // 2 - 1, (144 - 8 * 12) // 2 - 1, 24 * 8 + 2, 8 * 12 + 2, 7
@@ -182,9 +182,11 @@ class LevelEditor:
         tiles = [tile for tile in Tile]
         cursor = tiles.index(self.conf.selected_tile)
 
-        for i in range(1, len(tiles)):
+        for i in range(len(tiles) - 1):
             u, v = tiles[i].value
 
-            pyxel.blt(16, i * 16, 0, u * 8, v * 8, 8, 8)
+            y, x = i % 6, i // 6
+            pyxel.blt(4 + x * 16 + x//2 * 199, 24 + y * 16, 0, u * 8, v * 8, 8, 8, 0)
 
-        pyxel.rectb(16 - 1, -1 + cursor * 16, 10, 10, 7)
+        y, x = cursor % 6, cursor // 6
+        pyxel.rectb(4 + x * 16 + x//2 * 199 - 1, 24 + y * 16 - 1, 10, 10, 7)
