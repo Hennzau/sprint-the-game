@@ -2,6 +2,7 @@ import pyxel
 
 from typing import Tuple, Union
 from sprint_the_game import gui
+import sprint_the_game
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
 from sprint_the_game.game.level.tile import Tile
@@ -107,7 +108,7 @@ class LevelEditor:
             if event == GameEvent.CHANGE_STATE:
                 return (state, conf)
             elif event == GameEvent.SAVE_LEVEL:
-                pyxel.save("../../my_resource.pyxres")
+                pyxel.save(sprint_the_game.resource_path)
 
         x, y = pyxel.mouse_x // 8, pyxel.mouse_y // 8
 
@@ -136,8 +137,6 @@ class LevelEditor:
 
             cursor = max(1, min(len(tiles) - 1, cursor - pyxel.mouse_wheel))
             self.conf.selected_tile = tiles[cursor]
-
-            print(cursor)
 
         return (GameState.LEVEL_EDITOR, None)
 
