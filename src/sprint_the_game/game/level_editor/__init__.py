@@ -76,8 +76,8 @@ class LevelEditor:
             elif event == GameEvent.SAVE_LEVEL:
                 pyxel.save(sprint_the_game.resource_path)
             elif event == GameEvent.ERASE_LEVEL:
-                for x in range (24):
-                    for y in range (12):
+                for x in range(24):
+                    for y in range(12):
                         u, v = Tile.EMPTY.value
 
                         pyxel.tilemaps[1].set(
