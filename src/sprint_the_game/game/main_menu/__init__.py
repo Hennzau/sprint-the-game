@@ -34,7 +34,7 @@ class MainMenu:
                 (
                     GameEvent.CHANGE_STATE,
                     GameState.LEVEL_EDITOR,
-                    LevelEditorConf(selected_tile=Tile.WALL, selected_level=None),
+                    None,
                 )
             ),
         )

@@ -151,7 +151,7 @@ class LevelEditor:
         pyxel.rectb(
             (256 - 8 * 24) // 2 - 1, (144 - 8 * 12) // 2 - 1, 24 * 8 + 2, 8 * 12 + 2, 7
         )
-        pyxel.rect((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 24 * 8, 8 * 12, 0)
+        pyxel.rect((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 24 * 8, 8 * 12, 1)
 
         pyxel.bltm(
             (256 - 8 * 24) // 2,
@@ -161,6 +161,7 @@ class LevelEditor:
             8 * LEVEL_Y,
             8 * 24,
             8 * 12,
+            0
         )
 
         text = (
@@ -177,7 +178,7 @@ class LevelEditor:
 
         if 4 <= x < 28 and 3 <= y < 15:
             u, v = self.conf.selected_tile.value
-            pyxel.blt(x * 8, y * 8, 0, u * 8, v * 8, 8, 8)
+            pyxel.blt(x * 8, y * 8, 0, u * 8, v * 8, 8, 8, 0)
 
         tiles = [tile for tile in Tile]
         cursor = tiles.index(self.conf.selected_tile)

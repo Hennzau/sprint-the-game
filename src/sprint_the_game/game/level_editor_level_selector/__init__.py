@@ -39,7 +39,7 @@ class LevelEditorLevelSelector:
             3,
             "Back",
             lambda: self.events.append(
-                (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR, None)
+                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
             ),
         )
 

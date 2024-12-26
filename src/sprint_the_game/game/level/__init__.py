@@ -29,7 +29,7 @@ class Level:
             123,
             "Hold q to go back",
             lambda: self.events.append(
-                (GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)
+                (GameEvent.CHANGE_STATE, GameState.GO_BACK, None)
             ),
         )
 
@@ -85,7 +85,7 @@ class Level:
         pyxel.rectb(
             (256 - 8 * 24) // 2 - 1, (144 - 8 * 12) // 2 - 1, 24 * 8 + 2, 8 * 12 + 2, 7
         )
-        pyxel.rect((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 24 * 8, 8 * 12, 0)
+        pyxel.rect((256 - 8 * 24) // 2, (144 - 8 * 12) // 2, 24 * 8, 8 * 12, 1)
 
         pyxel.bltm(
             (256 - 8 * 24) // 2,
@@ -95,6 +95,7 @@ class Level:
             8 * LEVEL_Y,
             8 * 24,
             8 * 12,
+            0
         )
 
         text = "Sprint - Level " + str(self.conf.selected_level)
