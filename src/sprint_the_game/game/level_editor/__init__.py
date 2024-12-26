@@ -15,8 +15,6 @@ from dataclasses import dataclass
 class LevelEditorConf(Conf):
     selected_level: int | None = None
     selected_tile: Tile = Tile.WALL
-    erase: bool = False
-    overwrite: bool = False
 
 
 class LevelEditor:
@@ -32,7 +30,7 @@ class LevelEditor:
             132,
             "Hold q to go back",
             lambda: self.events.append(
-                (GameEvent.CHANGE_STATE, GameState.MAIN_MENU, None)
+                (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR_LEVEL_SELECTOR, None)
             ),
         )
 
@@ -50,9 +48,9 @@ class LevelEditor:
             pyxel.KEY_E,
             180,
             132,
-            "Hold e to select",
+            "Hold e to erase",
             lambda: self.events.append(
-                (GameEvent.CHANGE_STATE, GameState.LEVEL_EDITOR_LEVEL_SELECTOR, None)
+                (GameEvent.ERASE_LEVEL, GameState.LEVEL_EDITOR, None)
             ),
         )
 
@@ -60,39 +58,7 @@ class LevelEditor:
         pyxel.mouse(True)
 
         if isinstance(conf, LevelEditorConf):
-            can_overwrite = (
-                self.conf.selected_level is None and conf.selected_level is not None
-            )
-
             self.conf = conf
-
-            i = 0 if self.conf.selected_level is None else self.conf.selected_level
-            i, j = i % 5, i // 5
-
-            LEVEL_X, LEVEL_Y = i * 24, j * 12
-
-            if self.conf.erase:
-                u, v = Tile.EMPTY.value
-
-                for i in range(24):
-                    for j in range(12):
-                        pyxel.tilemaps[1].set(
-                            i,
-                            j,
-                            [f"0{u}0{v} "],
-                        )
-
-            elif (
-                self.conf.overwrite and can_overwrite
-            ):  # copy the editor into this level
-                for i in range(24):
-                    for j in range(12):
-                        u, v = pyxel.tilemaps[1].pget(i, j)
-                        pyxel.tilemaps[1].set(
-                            LEVEL_X + i,
-                            LEVEL_Y + j,
-                            [f"0{u}0{v} "],
-                        )
 
     def update(self) -> Tuple[GameState, Conf | None]:
         i = 0 if self.conf.selected_level is None else self.conf.selected_level
@@ -109,6 +75,16 @@ class LevelEditor:
                 return (state, conf)
             elif event == GameEvent.SAVE_LEVEL:
                 pyxel.save(sprint_the_game.resource_path)
+            elif event == GameEvent.ERASE_LEVEL:
+                for x in range (24):
+                    for y in range (12):
+                        u, v = Tile.EMPTY.value
+
+                        pyxel.tilemaps[1].set(
+                            x + LEVEL_X,
+                            y + LEVEL_Y,
+                            [f"0{u}0{v}"],
+                        )
 
         x, y = pyxel.mouse_x // 8, pyxel.mouse_y // 8
 

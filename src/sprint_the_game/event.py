@@ -6,3 +6,4 @@ class GameEvent(Enum):
     CHANGE_CONF = 1
     RELOAD_LEVEL = 2
     SAVE_LEVEL = 3
+    ERASE_LEVEL = 4

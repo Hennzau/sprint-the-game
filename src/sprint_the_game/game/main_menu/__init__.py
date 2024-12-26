@@ -31,7 +31,7 @@ class MainMenu:
             lambda: self.events.append(
                 (
                     GameEvent.CHANGE_STATE,
-                    GameState.LEVEL_EDITOR,
+                    GameState.LEVEL_EDITOR_LEVEL_SELECTOR,
                     None,
                 )
             ),
