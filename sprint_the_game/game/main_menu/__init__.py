@@ -20,7 +20,7 @@ class MainMenu:
 
         self.gui.add(
             0,
-            "Start",
+            "Play",
             lambda: self.events.append(
                 (GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)
             ),

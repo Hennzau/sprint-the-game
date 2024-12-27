@@ -1,8 +1,7 @@
 import pyxel
 
 from typing import Tuple, Union
-from sprint_the_game import gui
-import sprint_the_game
+from sprint_the_game import app, gui
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game import Conf
 from sprint_the_game.game.level.tile import Tile
@@ -74,7 +73,7 @@ class LevelEditor:
             if event == GameEvent.CHANGE_STATE:
                 return (state, conf)
             elif event == GameEvent.SAVE_LEVEL:
-                pyxel.save(sprint_the_game.resource_path)
+                pyxel.save(app.resource_path)
             elif event == GameEvent.ERASE_LEVEL:
                 for x in range(24):
                     for y in range(12):

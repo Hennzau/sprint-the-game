@@ -3,19 +3,5 @@ name = "sprint-the-game"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "Enzo Le Van", email = "dev@enzo-le-van.fr" } 
-]
 requires-python = ">=3.13"
-dependencies = [
-    "numpy>=2.2.0",
-    "pyxel>=2.2.8",
-    "ruff>=0.8.4",
-]
-
-[project.scripts]
-sprint-the-game = "sprint_the_game:main"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+dependencies = ["numpy>=2.2.1", "pyxel>=2.2.8", "ruff>=0.8.4"]

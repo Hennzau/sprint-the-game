@@ -1,5 +1,4 @@
 import pyxel
-import argparse
 
 from sprint_the_game.game.level import Level, LevelConf
 from sprint_the_game.game.level_editor import LevelEditor, LevelEditorConf
@@ -19,16 +18,10 @@ class App:
     def __init__(self):
         pyxel.init(256, 144, title="Sprint The Game", display_scale=5, fps=120)
 
-        parser = argparse.ArgumentParser(
-            prog="Sprint The Game",
-            description="Play to the game",
-        )
-
-        parser.add_argument("filepath")
-        args = parser.parse_args()
+        import os
 
         global resource_path
-        resource_path = f"{args.filepath}/my_resource.pyxres"
+        resource_path = f"{os.getcwd()}/my_resource.pyxres"
         pyxel.load(resource_path)
 
         self.state = {
@@ -73,12 +66,3 @@ class App:
         pyxel.cls(0)
 
         self.state[self.current_state].draw()
-
-
-def main() -> None:
-    app = App()
-    app.run()
-
-
-if __name__ == "__main__":
-    main()
