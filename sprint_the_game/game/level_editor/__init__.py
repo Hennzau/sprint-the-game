@@ -3,6 +3,7 @@ import pyxel
 from typing import Tuple, Union
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game.conf import Conf
+from sprint_the_game.game.level.cubes import Cubes
 from sprint_the_game.game.level.tile import Tile
 from sprint_the_game.gui.dynamic_buttons import DynamicButtons
 from sprint_the_game.state import GameState
@@ -43,14 +44,16 @@ class LevelEditor:
         )
 
         self.gui.add(
-            pyxel.KEY_E,
+            pyxel.KEY_R,
             180,
             132,
-            "Hold e to erase",
+            "Hold r to reload",
             lambda: self.events.append(
-                (GameEvent.ERASE_LEVEL, GameState.LEVEL_EDITOR, None)
+                (GameEvent.RELOAD_LEVEL, GameState.LEVEL_EDITOR, None)
             ),
         )
+
+        self.cubes = Cubes()
 
     def update_conf(self, conf: Conf | None):
         from sprint_the_game.game.level_editor.update import update_conf

@@ -14,6 +14,8 @@ def update_conf(level_editor: LevelEditor, conf: Conf | None):
 
     if isinstance(conf, LevelEditorConf):
         level_editor.conf = conf
+        if level_editor.conf.selected_level is not None:
+            level_editor.cubes.load_level(level_editor.conf.selected_level)
 
 
 def update(level_editor: LevelEditor) -> Tuple[GameState, Conf | None]:
@@ -35,16 +37,9 @@ def update(level_editor: LevelEditor) -> Tuple[GameState, Conf | None]:
             return (state, conf)
         elif event == GameEvent.SAVE_LEVEL:
             pyxel.save(app.resource_path)
-        elif event == GameEvent.ERASE_LEVEL:
-            for x in range(24):
-                for y in range(12):
-                    u, v = Tile.EMPTY.value
-
-                    pyxel.tilemaps[1].set(
-                        x + LEVEL_X,
-                        y + LEVEL_Y,
-                        [f"0{u}0{v}"],
-                    )
+        elif event == GameEvent.RELOAD_LEVEL:
+            if level_editor.conf.selected_level is not None:
+                level_editor.cubes.load_level(level_editor.conf.selected_level)
 
     x, y = pyxel.mouse_x // 8, pyxel.mouse_y // 8
 
@@ -71,5 +66,7 @@ def update(level_editor: LevelEditor) -> Tuple[GameState, Conf | None]:
 
         cursor = max(0, min(len(tiles) - 2, cursor - pyxel.mouse_wheel))
         level_editor.conf.selected_tile = tiles[cursor]
+
+    level_editor.cubes.update()
 
     return (GameState.LEVEL_EDITOR, None)

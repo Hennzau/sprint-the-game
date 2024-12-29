@@ -33,6 +33,8 @@ def draw(level_editor: LevelEditor):
         0,
     )
 
+    level_editor.cubes.draw()
+
     text = (
         "Sprint - Editor (?)"
         if level_editor.conf.selected_level is None
