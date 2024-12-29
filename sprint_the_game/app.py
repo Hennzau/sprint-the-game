@@ -17,7 +17,7 @@ resource_path = None
 
 class App:
     def __init__(self):
-        pyxel.init(256, 144, title="Sprint The Game", display_scale=5, fps=120)
+        pyxel.init(256, 144, title="Sprint The Game", display_scale=5, fps=75)
 
         import os
 

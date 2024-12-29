@@ -42,10 +42,30 @@ class Cube:
         self.level = level
 
         self.end = False
+        self.base_speed = 300
+        self.speed = self.base_speed
 
     def update(self):
-        self.render_pos = np.array(self.pos, dtype=np.float32) * 8
-        self.render_tile = self.current_tile
+        if not self.is_moving():
+            self.speed = self.base_speed
+
+        dir = np.array(self.pos, dtype=np.float32) * 8 - self.render_pos
+        dir = (
+            dir / np.linalg.norm(dir) if np.linalg.norm(dir) != 0 else np.array((0, 0))
+        )
+
+        self.speed += self.base_speed * 3 * (1.0 / 75.0)
+        delta = self.speed * (1.0 / 75.0)
+
+        d1 = np.linalg.norm(np.array(self.pos, dtype=np.float32) * 8 - self.render_pos)
+        d2 = np.linalg.norm(
+            np.array(self.pos, dtype=np.float32) * 8 - self.render_pos - delta * dir
+        )
+
+        if d2 > d1:
+            self.render_pos = np.array(self.pos, dtype=np.float32) * 8
+        elif d2 > 0:
+            self.render_pos += delta * dir
 
         i, j = self.level % 5, self.level // 5
 
@@ -65,6 +85,24 @@ class Cube:
             self.end = True
         else:
             self.end = False
+
+        x, y = (
+            int(self.render_pos[0]) // 8 + LEVEL_X,
+            int(self.render_pos[1]) // 8 + LEVEL_Y,
+        )
+
+        tile = Tile(pyxel.tilemaps[1].pget(x, y))
+
+        if self.is_switch(tile):
+            self.render_tile = (
+                CubeTile.YELLOW
+                if tile == Tile.YELLOW_SWITCH
+                else CubeTile.PINK
+                if tile == Tile.PINK_SWITCH
+                else CubeTile.GREEN
+                if tile == Tile.GREEN_SWITCH
+                else CubeTile.BLUE
+            )
 
     def draw(self):
         u, v = self.render_tile.value

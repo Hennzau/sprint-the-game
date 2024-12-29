@@ -32,14 +32,15 @@ def update(level: Level) -> Tuple[GameState, Conf | None]:
     if level.end is None:
         level.cubes.update()
 
-        end = {}
-        for cube in level.cubes.cubes:
-            if cube.end:
-                if cube.pos not in end:
-                    end[cube.pos] = None
+        if not level.cubes.is_moving():
+            end = {}
+            for cube in level.cubes.cubes:
+                if cube.end:
+                    if cube.pos not in end:
+                        end[cube.pos] = None
 
-        if len(end) == len(level.cubes.cubes):
-            level.end = time.time()
+            if len(end) == len(level.cubes.cubes):
+                level.end = time.time()
     else:
         if time.time() - level.end > 0.5:
             level.end = None
