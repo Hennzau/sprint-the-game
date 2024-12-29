@@ -28,6 +28,8 @@ def draw(level: Level):
         0,
     )
 
+    level.cubes.draw()
+
     text = "Sprint - Level " + str(level.conf.selected_level)
     x, y = (256 - 4 * len(text)) // 2, 13
 

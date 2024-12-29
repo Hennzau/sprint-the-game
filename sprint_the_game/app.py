@@ -9,6 +9,7 @@ from sprint_the_game.game.level_editor_level_selector import (
 from sprint_the_game.game.level_selector import LevelSelector, LevelSelectorConf
 from sprint_the_game.game.main_menu import MainMenu, MainMenuConf
 from sprint_the_game.game.options import Options, OptionsConf
+from sprint_the_game.game.victory import Victory, VictoryConf
 from sprint_the_game.state import GameState
 
 resource_path = None
@@ -33,6 +34,7 @@ class App:
             GameState.LEVEL_EDITOR_LEVEL_SELECTOR: LevelEditorLevelSelector(
                 LevelEditorLevelSelectorConf()
             ),
+            GameState.VICTORY: Victory(VictoryConf()),
         }
 
         self.current_state = GameState.MAIN_MENU

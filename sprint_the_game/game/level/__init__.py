@@ -3,7 +3,7 @@ import pyxel
 from typing import Tuple, Union
 from sprint_the_game.event import GameEvent
 from sprint_the_game.game.conf import Conf
-from sprint_the_game.game.level.players import Players
+from sprint_the_game.game.level.cubes import Cubes
 from sprint_the_game.game.level_editor import LevelEditorConf
 from sprint_the_game.gui.dynamic_buttons import DynamicButtons
 from sprint_the_game.state import GameState
@@ -29,7 +29,7 @@ class Level:
             123,
             "Hold q to go back",
             lambda: self.events.append(
-                (GameEvent.CHANGE_STATE, GameState.GO_BACK, None)
+                (GameEvent.CHANGE_STATE, GameState.LEVEL_SELECTOR, None)
             ),
         )
 
@@ -57,7 +57,8 @@ class Level:
             ),
         )
 
-        self.players = Players()
+        self.cubes = Cubes()
+        self.end: float | None = None
 
     def update_conf(self, conf: Conf | None):
         from sprint_the_game.game.level.update import update_conf

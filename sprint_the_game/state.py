@@ -11,3 +11,5 @@ class GameState(Enum):
     LEVEL_EDITOR_LEVEL_SELECTOR = 6
 
     GO_BACK = 7
+
+    VICTORY = 8
